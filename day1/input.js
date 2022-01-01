@@ -2,7 +2,8 @@ const fs = require('fs');
 
 const input = fs
 	.readFileSync('input.txt', 'utf8')
-	.split('\n');
+	.toString()
+	.split("\n")
 
 module.exports = {
 	input,
