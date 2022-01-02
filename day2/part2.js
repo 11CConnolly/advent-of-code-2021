@@ -2,8 +2,9 @@ const {input} = require("./input.js");
 
 const instructions = input.map(x => x.split(/[ ,]+/));
 
-let horizDiff = 0
-let vertDiff = 0
+let aim = 0;
+let horizontalDifference = 0;
+let verticalDifference = 0;
 
 for (let i = 0; i < instructions.length; i++) {
 
@@ -12,15 +13,16 @@ for (let i = 0; i < instructions.length; i++) {
   
   switch (instruction) {
     case "forward": 
-      horizDiff += distance;
+      horizontalDifference += distance;
+      verticalDifference += distance * aim;
       break;
     case "down": 
-      vertDiff += distance;
+      aim += distance;
       break;
     case "up": 
-      vertDiff -= distance;
+      aim -= distance;
       break;
   }
 }
 
-console.log(horizDiff * vertDiff);
+console.log(`${horizontalDifference} and ${verticalDifference} with aim ${aim} for a final answer of ${horizontalDifference * verticalDifference}`);
