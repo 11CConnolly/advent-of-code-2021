@@ -35,10 +35,4 @@ const findRates = (array, isGammaRate) => {
   return currentArray;
 }
 
-console.log(parseInt(findRates(input, false), 2));
-console.log(parseInt(findRates(input, true), 2));
-
-// const leastCommonBit = count > 0 ? '0' : '1';
-// let newArray = inputCO2.filter(x => x[position] === leastCommonBit)
-
-// const lifeSupportRating = parseInt(O2GenRating, 2) * parseInt(CO2ScrubberRating, 2);
+console.log(parseInt(findRates(input, false), 2) * parseInt(findRates(input, true), 2));
