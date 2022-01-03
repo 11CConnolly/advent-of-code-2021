@@ -1,23 +1,10 @@
 const { input } = require('./input');
 
-const convertToDecimal = (binary) => {
-  let decimal = 0;
-  let twos = 1;
-  
-  for  (let i = binary.length - 1; i >= 0; i--) {
-    binary[i] === 1 ? decimal += twos : null; 
-    
-    twos *= 2;
-  }
-  
-  return decimal;
-}
-
 const lineLength = input[0].length;
 const lines = input.length;
 
-let gammaRate = [];
-let epsilonRate = [];
+let gammaRate = "";
+let epsilonRate = "";
 
 for (let position = 0; position < lineLength; position++) {
 
@@ -31,11 +18,12 @@ for (let position = 0; position < lineLength; position++) {
           : count -= 1;
   }
   
-  count >= 0
-        ? (gammaRate[position] = 1, epsilonRate[position] = 0) 
-        : (gammaRate[position] = 0, epsilonRate[position] = 1);
+  count > 0
+        ? (gammaRate += 1, epsilonRate += 0) 
+        : (gammaRate += 0, epsilonRate += 1);
 }
 
-// I now have the two numbers in binary, I need to convert them to decimal to multiply them 
+// Can use parseInt to convert between bases
+const powerConsumption = parseInt(gammaRate, 2) * parseInt(epsilonRate, 2);
 
-console.log(`${convertToDecimal(gammaRate) * convertToDecimal(epsilonRate)}`);
+console.log(powerConsumption);
