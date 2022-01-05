@@ -65,8 +65,6 @@ const findFirstWinningBoard = (numbers, boards) => {
 
 const { firstBoard, firstPick } = findFirstWinningBoard(pickNumbers.split(',').map(Number), boards);
 
-console.log(firstBoard, firstPick);
-
 let total = 0;
 
 firstBoard.forEach(line => {
