@@ -3,19 +3,27 @@ const { input } = require('./input');
 const { pickNumbers, boards } = input;
 
 const checkRowOrColumnIsComplete = (schlength) => {
-  return schlength.filter(x => x === "-1").length === 5;
+  return schlength.slice().filter(x => x === "-1").length === 5;
 }
 
 const boardIsComplete = (board) => {
   for (let i = 0; i < 5; i++) {
     let rowLine = [];
-    let columnLine = [];
     for (let j = 0; j < 5; j++) {
       rowLine.push(board[i][j]);
+    }
+    
+    if (checkRowOrColumnIsComplete(rowLine))
+      return true;
+  }
+  
+  for (let i = 0; i < 5; i++) {
+    let columnLine = [];
+    for (let j = 0; j < 5; j++) {
       columnLine.push(board[j][i]);
     }
     
-    if (checkRowOrColumnIsComplete(rowLine) || checkRowOrColumnIsComplete(columnLine))
+    if (checkRowOrColumnIsComplete(columnLine))
       return true;
   }
   
@@ -23,8 +31,8 @@ const boardIsComplete = (board) => {
 }
 
 const markBoard = (board, pick) => {
-  for (let i = 0; i < board.length; i++) {
-    for (let j = 0; j < board[0].length; j++) {
+  for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 5; j++) {
       if (Number(board[i][j]) === pick) {
         board[i][j] = "-1";
         return true;
@@ -35,29 +43,47 @@ const markBoard = (board, pick) => {
   return false;
 }
 
-const findFirstWinningBoard = (numbers, boards) => {
-  let firstBoard = [];
-  let firstPick = 0;
+const findLastWinningBoard = (numbers, boards) => {
+  let winningBoard = [];
+  let calledPick = 0;
   numbers.every(pick => {
-    firstBoard = boards.find(board => markBoard(board, pick) && boardIsComplete(board));
-    if (firstBoard !== undefined) {
-      firstPick = pick;
-      return false;
+    winningBoard = boards.find(board => markBoard(board, pick) && boardIsComplete(board));
+    console.log(winningBoard);
+    if (winningBoard !== undefined) {
+      boards.splice(boards.indexOf(winningBoard), 1);
+      if (boards.length === 0)
+        return false;
     }
     
     return true;
   })
   
-  return { firstBoard, firstPick }
+  return { winningBoard, calledPick }
 }
 
-const { firstBoard, firstPick } = findFirstWinningBoard(pickNumbers.split(',').map(Number), boards);
+const findLastWinningBoard = (numbers, boards) => {
+  let winningBoard = []
+  let calledNumber = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    winningBoard = boards.find(board => markBoard(board, numbers[i]) && boardIsComplete(board));
+    if (winningBoard !== undefined) {
+      calledNumber = numbers[i]
+      boards.splice(boards.indexOf(winningBoard), 1);
+      
+      if (boards.length === 0) return true;
+    }
+  }
+  
+  return { winningBoard, calledNumber }
+}
+
+const { winningBoard, calledPick } = findLastWinningBoard(pickNumbers.split(',').map(Number), boards);
 
 // Calculate Score
 let total = 0;
-firstBoard.forEach(line => {
+winningBoard.forEach(line => {
   line.forEach(number => 
     number !== "-1" && (total += Number(number))
   )
 })
-console.log(total * firstPick);
+console.log(total * calledPick);

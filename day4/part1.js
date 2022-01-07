@@ -9,13 +9,22 @@ const checkRowOrColumnIsComplete = (schlength) => {
 const boardIsComplete = (board) => {
   for (let i = 0; i < 5; i++) {
     let rowLine = [];
-    let columnLine = [];
     for (let j = 0; j < 5; j++) {
       rowLine.push(board[i][j]);
+    }
+    
+    if (checkRowOrColumnIsComplete(rowLine))
+      return true;
+  }
+  
+  
+  for (let i = 0; i < 5; i++) {
+    let columnLine = [];
+    for (let j = 0; j < 5; j++) {
       columnLine.push(board[j][i]);
     }
     
-    if (checkRowOrColumnIsComplete(rowLine) || checkRowOrColumnIsComplete(columnLine))
+    if (checkRowOrColumnIsComplete(columnLine))
       return true;
   }
   
