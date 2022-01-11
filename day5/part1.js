@@ -18,28 +18,20 @@ input.map(pair => {
 })
 
 let board = new Array(maxX + 1);
+
 for (let i = 0; i < maxX + 1; i++) {
   board[i] = new Array(maxY + 1).fill(".");
 }
 
-console.log(board);
-
 input.map(x => {
   const line = x.calculateLine();
-  if (line !== undefined) {
-    for (p of line) {
-      console.log(typeof(p));
-      console.log(p);
-      console.log("===");
-      if (board[p.x][p.y] === ".") {
-        board[p.x][p.y] = 1;
-      } else {
-        board[p.x][p.y]++;
-      }
-    }
-  }
-});
-
+  line && (line.map(p => {
+      board[p.x][p.y] === "." 
+        ? board[p.x][p.y] = 1
+        : board[p.x][p.y]++;
+  }))
+})
+	
 let crossovers = 0;
 board.map(e => e.map(x => {x > 1 && (crossovers++)}));
 
