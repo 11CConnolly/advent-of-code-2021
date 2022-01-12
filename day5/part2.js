@@ -31,7 +31,7 @@ input.map(x => {
         : board[p.x][p.y]++;
   }))
 })
-	
+
 let crossovers = 0;
 board.map(e => e.map(x => {x > 1 && (crossovers++)}));
 

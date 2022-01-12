@@ -56,23 +56,34 @@ class Pair {
     line.push(this.first);
     
     let smaller = 0;
-    let x_diff = Math.abs(this.first.x - this.second.x);
-    let y_diff = Math.abs(this.first.y - this.second.y);
+    let diff = Math.abs(this.first.x - this.second.x);
     
     if (this.first.x === this.first.y) {
       this.first.x < this.second.x 
         ? smaller = this.first.x
         : smaller = this.first.y
-      for (let i = 1; i < x_diff; i++) {
+      for (let i = 1; i < diff; i++) {
         line.push(new Point(smaller + i, smaller + i))
       }
     } else if (this.first.x < this.second.x) {
-      for (let i = 1; i < x_diff; i++) {
-        line.push(new Point(this.first.x + i, this.first.y - i))
+      if (this.first.y > this.second.y) {
+        for (let i = 1; i < diff; i++) {
+          line.push(new Point(this.first.x + i, this.first.y - i))
+        }
+      } else {
+        for (let i = 1; i < diff; i++) {
+          line.push(new Point(this.first.x + i, this.first.y + i))
+        }
       }
     } else if (this.first.x > this.second.x) {
-      for (let i = 1; i < x_diff; i++) {
-        line.push(new Point(this.second.x + i, this.second.y - i))
+      if (this.first.y > this.second.y) {
+        for (let i = 1; i < diff; i++) {
+          line.push(new Point(this.second.x + i, this.second.y + i))
+        }
+      } else {
+        for (let i = 1; i < diff; i++) {
+          line.push(new Point(this.second.x + i, this.second.y - i))
+        }
       }
     }
     
