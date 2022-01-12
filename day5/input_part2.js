@@ -20,7 +20,7 @@ class Pair {
   
   calculateLine() {
     if (!this.isStraightLine)
-      return calculateDiagLine();
+      return this.calculateDiagLine();
     
     let line = [];
     line.push(this.first);
@@ -61,20 +61,20 @@ class Pair {
     
     if (this.first.x === this.first.y) {
       this.first.x < this.second.x 
-        ? smaller = this.first.x;
-        : smaller = this.first.y;
+        ? smaller = this.first.x
+        : smaller = this.first.y
       for (let i = 1; i < x_diff; i++) {
         line.push(new Point(smaller + i, smaller + i))
       }
     } else if (this.first.x < this.second.x) {
-      // Do something else
+      for (let i = 1; i < x_diff; i++) {
+        line.push(new Point(this.first.x + i, this.first.y - i))
+      }
     } else if (this.first.x > this.second.x) {
-      // Do something else
+      for (let i = 1; i < x_diff; i++) {
+        line.push(new Point(this.second.x + i, this.second.y - i))
+      }
     }
-    
-    let smaller = 0;
-    
-    
     
     line.push(this.second);
     
