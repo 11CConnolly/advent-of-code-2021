@@ -1,4 +1,4 @@
-const { input, Point, Pair } = require('./input');
+const { input, Point, Pair } = require('./input_part1');
 
 // Find max size of board X and Y
 // There's a better way to do this, probably
