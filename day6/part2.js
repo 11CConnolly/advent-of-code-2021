@@ -1,71 +1,20 @@
 const { input } = require('./input');
 
-const { pickNumbers, boards } = input;
+// [3, 4, 3, 1, 2]
 
-const checkRowOrColumnIsComplete = (schlength) => {
-  return schlength.slice().filter(x => x === "-1").length === 5;
-}
+let count = 0;
 
-const boardIsComplete = (board) => {
-  for (let i = 0; i < 5; i++) {
-    let rowLine = [];
-    for (let j = 0; j < 5; j++) {
-      rowLine.push(board[i][j]);
+while (count < 80) {
+  // Maybe can refactor this to filter out all the 0s then each time add an 8? 
+  for (let i=0;i<input.length;i++) {
+    if (input[i] === 0) {
+      input[i] = 7;
+      input.push(9);
     }
-    
-    if (checkRowOrColumnIsComplete(rowLine)) return true;
+    input[i]--;
   }
   
-  for (let i = 0; i < 5; i++) {
-    let columnLine = [];
-    for (let j = 0; j < 5; j++) {
-      columnLine.push(board[j][i]);
-    }
-    
-    if (checkRowOrColumnIsComplete(columnLine)) return true;
-  }
-  
-  return false;
+  count++;
 }
-
-const markBoard = (board, pick) => {
-  for (let i = 0; i < 5; i++) {
-    for (let j = 0; j < 5; j++) {
-      if (Number(board[i][j]) === pick) {
-        board[i][j] = "-1";
-        return true;
-      }
-    }
-  }
-  
-  return false;
-}
-
-const winningOrder = [];
-let finalPickedNumber = 0;
-
-const findLastWinningBoard = (numbers, boards) => {
-  for (let pick of numbers) {
-    for (let i = 0; i < boards.length; i++) {
-      if (winningOrder.indexOf(i) !== -1) {
-        continue;
-      }
-      if (markBoard(boards[i], pick) && boardIsComplete(boards[i])) {
-          finalPickedNumber = pick;
-          winningOrder.push(i);
-      }
-    }
-  }
-}
-
-findLastWinningBoard(pickNumbers.split(',').map(Number), boards);
-
-// Calculate Score
-let total = 0;
-boards[winningOrder[winningOrder.length - 1]].forEach(line => {
-  line.forEach(number => 
-    number !== "-1" && (total += Number(number))
-  )
-})
-
-console.log(total * finalPickedNumber);
+ 
+console.log(input.length);
