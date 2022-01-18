@@ -3,18 +3,25 @@ const { input } = require('./input');
 // [3, 4, 3, 1, 2]
 
 let count = 0;
+const fishPools = [[3, 4, 3, 1, 2]]
 
-while (count < 80) {
-  // Maybe can refactor this to filter out all the 0s then each time add an 8? 
-  for (let i=0;i<input.length;i++) {
-    if (input[i] === 0) {
-      input[i] = 7;
-      input.push(9);
+while (count < 256) {
+  for (let i=0; i<fishPools.length; i++) {
+    for (let f=0;f<fishPools[i].length;f++) {
+      if (fishPools[i][f] === 0) {
+        fishPools[i][f] = 7;
+        // Maybe push an 8?
+        if (fishPools[i+1] === undefined) {
+          fishPools[i+1] = []
+        }
+        fishPools[i+1].push(9)
+      }
+      fishPools[i][f]--;
     }
-    input[i]--;
   }
   
   count++;
 }
- 
-console.log(input.length);
+let fishes = 0;
+fishPools.map(pool => fishes += pool.length);
+console.log(fishes);

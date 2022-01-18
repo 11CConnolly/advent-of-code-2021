@@ -2,6 +2,8 @@ const { input } = require('./input');
 
 // [3, 4, 3, 1, 2]
 
+console.log(input);
+
 let count = 0;
 
 while (count < 80) {
