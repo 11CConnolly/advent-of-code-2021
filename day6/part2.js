@@ -1,27 +1,35 @@
 const { input } = require('./input');
 
-// [3, 4, 3, 1, 2]
+const MAX_DAYS = 256;
+const fishesEachDay = new Array(MAX_DAYS).fill(0);
 
-let count = 0;
-const fishPools = [[3, 4, 3, 1, 2]]
+// Fill the fishes each day with the initial spawn
 
-while (count < 256) {
-  for (let i=0; i<fishPools.length; i++) {
-    for (let f=0;f<fishPools[i].length;f++) {
-      if (fishPools[i][f] === 0) {
-        fishPools[i][f] = 7;
-        // Maybe push an 8?
-        if (fishPools[i+1] === undefined) {
-          fishPools[i+1] = []
-        }
-        fishPools[i+1].push(9)
-      }
-      fishPools[i][f]--;
+for (let i = 0; i < input.length; i++) {
+  let fishLife = input[i];
+  for (let day = 0; day < MAX_DAYS; day++) {
+    if (fishLife === 0) {
+      fishesEachDay[day]+=1;
+      fishLife = 7;
     }
+    fishLife--;
   }
-  
-  count++;
 }
-let fishes = 0;
-fishPools.map(pool => fishes += pool.length);
-console.log(fishes);
+
+// Then let it do it's thing
+
+for (let day = 0; day < MAX_DAYS; day++) {
+  let dailySpawn = fishesEachDay[day];
+  let life = day + 9;
+  for (let i = life; i < MAX_DAYS; i+=7) {
+    fishesEachDay[i] += dailySpawn;
+  }
+}
+
+const totalFish = fishesEachDay.reduce((previousVal, currentVal) => previousVal + currentVal) + input.length;
+
+console.log(totalFish);
+
+// Rewrite the problem in different ways, restate the problem, redraw the problem in different ways
+// Try and spot patterns in answers, test runs, solutions
+// I am a programming demi-god
