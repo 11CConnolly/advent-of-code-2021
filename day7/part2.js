@@ -1,30 +1,28 @@
 const { input } = require('./input');
 
-input.sort((a, b) => a - b);
+let minFuelCost = Infinity;
+let maxCrabPosition = 0;
 
-let medianIndex = Math.floor(input.length / 2);
-
-// Calculate fuel
-let middle = 0;
-
-if (input.length % 2 === 0) {
-  middle = ((input[medianIndex - 1] + input[medianIndex]) / 2)
-} else {
-  middle = input[medianIndex];
+// Find the maxmimum crab position
+for (const crab of input) {
+  if (crab > maxCrabPosition)
+    maxCrabPosition = crab;
 }
 
-console.log(input);
-console.log("===");
-
-// Calculate fuel
-let totalFuel = 0;
-
-for (let crab = 0; crab < input.length; crab++) {
-  let distance = Math.abs(input[crab] - middle);
-  console.log(distance);
-  for (let i = 0; i <= distance; i++) {
-    totalFuel += i;
+for (let i = 0; i < maxCrabPosition; i++) {
+  let total = 0;
+  
+  // Go through and find each crab
+  for (let crab = 0; crab < input.length; crab++) {
+    let distance = Math.abs(input[crab] - i);
+    for (let j = 0; j <= distance; j++) {
+      total += j;
+    }
   }
+  
+  // Check the lowest fuel cost so far
+  if (total < minFuelCost)
+    minFuelCost = total;    
 }
 
-console.log(totalFuel);
+console.log(minFuelCost);
