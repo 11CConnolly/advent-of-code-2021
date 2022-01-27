@@ -4,10 +4,9 @@ const lines = fs
         .readFileSync("input.txt", "utf8")
         .toString()
         .split(/\r?\n/)
-        .toString();
         
-const input = lines.split(",").map(Number);
+input = lines.map(x => x.split("|").map(s => s.trim()));
 
 module.exports = {
-  input,
+  input
 }
